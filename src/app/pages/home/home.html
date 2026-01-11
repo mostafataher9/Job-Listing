@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+</head>
+<body>
+   <Navbar />
+   <div class="heading">
+    <h1> Job Listing </h1>
+    <p>Find or Post Jobs &  Projects</p>
+   </div>
+   <form #searchForm="ngForm" (ngSubmit)="onSubmit(searchForm)">
+    <input type="text" [(ngModel)]="search" name="search" placeholder="Search Laravel Icons"  />
+    <button type="submit"> Search </button>
+   </form>
+   <div class="jobs" *ngFor="let job of jobs">
+      <div class="job-card">
+        <ul> <!--class name job_title, company_name are used bcz every onne has own styling-->
+          <li class="job_title">  <h3> {{job.job_title}} </h3> </li>
+          <li class="company_name">  {{job.company_name}} </li>
+          <li class="tags">  <span class="tag" *ngFor="let tag of job.tags.split(',')"> <button type="button"> {{ tag.trim() }} </button> </span>  </li> 
+        </ul>
+      </div>
+   </div>
+   <Footer />
+</body>
+
+

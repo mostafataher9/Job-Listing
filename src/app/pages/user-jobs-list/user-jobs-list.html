@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+
+</head>
+<body>
+   <UserNavbar />
+   <div class="">
+    
+     <h2> Manage Jobs</h2>
+      <table class="">xss
+        <thead class="">
+          <tr>
+            {/* to preserve numbering when delete */}
+            <th class="">Index</th>
+            <th class="">Title</th>
+            <th class="">Job-Name</th>
+            <th class="">Actions</th>
+          </tr>
+        </thead>
+        <tbody *ngFor="let job of jobs">
+            <tr key={job.id} class="">
+              <td class="">{index + 1}</td>
+              <td class="">{job.id}</td>
+              <td class="">{job.name}</td>
+              
+              <td class="">
+                {/*View */}
+                <button 
+                  class=""  (click)={viewJob(job)}>
+                  <i className="bi bi-eye"></i>
+                </button>
+                {/*Edit */}
+                <button
+                  class="" (click)={editJob(job)}>
+                  <i className="bi bi-pencil-square"></i>
+                </button>
+                 {/*Delete */}
+                <button
+                  class=""
+                  (click)={deleteJob(job)}>
+                  <i className="bi bi-trash"></i>
+                </button>
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+   </div>
+   <footer />
+</body>
+

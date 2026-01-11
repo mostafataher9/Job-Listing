@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+
+</head>
+<body>
+ <div>
+  <UserNavbar />
+  <h2> New Job </h2>
+   <form  #registerForm="ngForm" (ngSubmit)="onSubmit(registerForm)">
+      <div>
+        <label>Company Name:</label>
+        <input type="text" [(ngModel)]="name" name="name" required/>
+      </div>
+
+      <div>
+        <label>Job Title:</label>
+        <input type="text" [(ngModel)]="title" name="title" required/>
+      </div>
+
+      <div>
+        <label>Job Location:</label>
+        <input type="text" [(ngModel)]="location" name="location" required/>
+      </div>
+
+      <div>
+        <label>Contact Email:</label>
+        <input type="email" [(ngModel)]="email" name="email" required/>
+      </div>
+
+      <div>
+        <label>Web/App URL</label>
+        <input type="text" [(ngModel)]="url" name="url" required/>
+      </div>
+
+     <div>
+         <label> Tags(Comma Separated)  </label>
+         <input type="text" [(ngModel)]="tags" name="tags" required/>
+     </div>
+
+     <div>
+         <label> Company Logo </label>
+         <input type="file"  #fileInput (change)="onFileSelected($event)" id="FileInput" hidden />
+         <button type="button"  (click)="fileInput.click()"> Choose File </button>
+         <span> {{selectedFileName  || 'No File Chosen'}}</span>
+     </div>
+
+     <div>
+        <label> Job Description </label>
+        <input type="text" [(ngModel)]="description" name="description" required/>
+     </div>
+      <button type="submit" class="btn btn-primary"> Create Job </button>
+      <button type="submit" (click)="goBack()" class="btn btn-secondary"> <i class="bi bi-arrow-left"></i>Back</button>
+   </form>
+  <Footer />
+  </div>
+</body>
+
+
+
+</html>

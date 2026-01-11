@@ -1,3 +1,27 @@
 import { Routes } from '@angular/router';
-
-export const routes: Routes = [];
+import { EditJob } from './pages/edit-job/edit-job';
+import { NewJob } from './pages/new-job/new-job';
+import { UserJobsList } from './pages/user-jobs-list/user-jobs-list';
+import { Register } from './pages/register/register';
+import { Logout } from './pages/logout/logout';
+import { Login } from './pages/login/login';
+import { Home } from './pages/home/home';
+import { JobView } from './pages/job-view/job-view';
+import { Analytics } from './pages/admin-dashboard/analytics/analytics';
+import { Settings } from './pages/admin-dashboard/settings/settings';
+import { SystemMonitoring } from './pages/admin-dashboard/system-monitoring/system-monitoring';
+import { UserManagement } from './pages/admin-dashboard/user-management/user-management';
+export const routes: Routes = [
+     { path: 'job/edit/:id', component: EditJob },
+     { path: 'job/add', component: NewJob },
+     { path: 'job/userjobslist'   ,component: UserJobsList },
+     { path: 'job/register'   ,component: Register },
+     { path: 'job/logout'   ,component: Logout },
+     { path: 'job/login'   ,component: Login },
+     { path: 'job/home'   ,component: Home },
+     { path: 'job/jobview/:id'   ,component: JobView },
+     { path: 'job/analytics'   ,component: Analytics },
+     { path: 'job/settings'   ,component: Settings },
+     { path: 'job/systemmonitoring'   ,component: SystemMonitoring },
+     { path: 'job/usermanagement'   ,component: UserManagement }
+];

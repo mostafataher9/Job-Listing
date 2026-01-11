@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+
+</head>
+<body>
+   <form  #registerForm="ngForm" (ngSubmit)="onSubmit(registerForm)">
+      <h2> Register </h2>
+      <div>
+        <label>Full Name:</label>
+        <input type="text" [(ngModel)]="name" name="name" required/>
+      </div>
+
+       <div>
+        <label>Username:</label>
+        <input type="name" [(ngModel)]="username" name="username" required/>
+      </div>
+
+      <div>
+        <label>Email:</label>
+        <input type="email" [(ngModel)]="email" name="email" required/>
+      </div>
+
+      <div>
+        <label>Password:</label>
+        <input type="password" [(ngModel)]="password" name="password" required/>
+      </div>
+      
+
+       <div>
+        <label> Confirm Password:</label>
+        <input type="password" [(ngModel)]="confirm_password" name="confirm_password" required/>
+      </div>
+      
+      <div>
+        <button type="submit" class="btn btn-primary">
+           SignUp
+        </button>
+        <p> Already have an account? <a href="/login"> Login  </a> </p>
+      </div>
+
+         
+   </form>
+
+
+</body>
+
+
+
+</html>

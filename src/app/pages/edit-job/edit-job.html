@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+
+</head>
+<body>
+   <form  #registerForm="ngForm" (ngSubmit)="onSubmit(registerForm)">
+      <UserNavbar />
+      <h2> Edit Job </h2>
+      <div>
+        <label>Company Name:</label>
+        <input type="text" [(ngModel)]="name" name="name" required/>
+      </div>
+
+      <div>
+        <label>Job Title:</label>
+        <input type="text" [(ngModel)]="title" name="title" required/>
+      </div>
+
+      <div>
+        <label>Job Location:</label>
+        <input type="text" [(ngModel)]="location" name="location" required/>
+      </div>
+
+      <div>
+        <label>Contact Email:</label>
+        <input type="email" [(ngModel)]="email" name="email" required/>
+      </div>
+
+      <div>
+        <label>Web/App URL</label>
+        <input type="text" [(ngModel)]="url" name="url" required/>
+      </div>
+
+     <div>
+         <label> Tags(Comma Separated)  </label>
+         <input type="text" [(ngModel)]="tags" name="tags" required/>
+     </div>
+
+     <div>
+         <label> Company Logo </label>
+         <input type="file"  #fileInput (change)="onFileSelected($event)" id="FileInput" hidden />
+         <button type="button"  (click)="fileInput.click()"> Choose File </button>
+         <span> {{selectedFileName  || 'No File Chosen'}}</span>
+     </div>
+
+     <div>
+        <label> Job Description </label>
+        <input type="text" [(ngModel)]="description" name="description" required/>
+     </div>
+      <button type="submit" class="btn btn-primary"> Edit Job </button>
+     <!--type="submit"  <button type="submit">Create Job</button>  Submits the form Triggers (ngSubmit) Runs your onSubmit() function
+      type="button"  <button type="button">Create Job</button> Does NOT submit form Only works if you add (click)="..."-->
+       <button type="submit" (click)="goBack()" class="btn btn-secondary"> <i class="bi bi-arrow-left"></i>Back</button>
+   </form>
+</body>
+</html>
