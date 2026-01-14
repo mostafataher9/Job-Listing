@@ -10,4 +10,9 @@ Route::put('job/{id}', [JobController::class, 'update']);
 Route::delete('job/{id}', [JobController::class, 'delete']);
 Route::get('jobs', [JobController::class, 'getJobs']);
 Route::get('job', [JobController::class, 'getJob']);
+
+Route::get('users', [UserController::class, 'getUsers']);
+Route::post('user', [UserController::class, 'add']);
+Route::put('user/{id}', [UserController::class, 'update']);
+Route::delete('user/{id}', [UserController::class, 'delete']);
 ?>

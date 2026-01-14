@@ -11,6 +11,12 @@ import { Analytics } from './pages/admin-dashboard/analytics/analytics';
 import { Settings } from './pages/admin-dashboard/settings/settings';
 import { SystemMonitoring } from './pages/admin-dashboard/system-monitoring/system-monitoring';
 import { UserManagement } from './pages/admin-dashboard/user-management/user-management';
+import { Navbar } from './core/layout/navbar/navbar';
+import { UserNavbar } from './core/layout/user-navbar/user-navbar';
+import { AdminNavbar } from './core/layout/admin-navbar/admin-navbar';
+import { Footer } from './core/layout/footer/footer';
+
+
 export const routes: Routes = [
      { path: 'job/edit/:id', component: EditJob },
      { path: 'job/add', component: NewJob },
@@ -23,5 +29,9 @@ export const routes: Routes = [
      { path: 'job/analytics'   ,component: Analytics },
      { path: 'job/settings'   ,component: Settings },
      { path: 'job/systemmonitoring'   ,component: SystemMonitoring },
-     { path: 'job/usermanagement'   ,component: UserManagement }
+     { path: 'job/usermanagement'   ,component: UserManagement },
+     { path: '/navbar', component: Navbar },
+     { path: '/usernavbar', component: UserNavbar },
+     { path: '/adminnavbar', component: AdminNavbar },
+     { path: '/footer', component: Footer }
 ];

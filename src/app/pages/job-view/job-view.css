@@ -1,0 +1,105 @@
+/* Card container - grid layout */
+.card-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 20px;
+  padding: 20px;
+}
+
+/* Job card */
+.job-card {
+  background-color: #fff;
+  border-radius: 12px;
+  padding: 16px;
+  border: 1px solid #ddd;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.05);
+  display: flex;
+  flex-direction: column;
+}
+
+/* Job details list */
+.job-details {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 10px 0;
+}
+
+.job-details li {
+  margin-bottom: 6px;
+}
+
+/* Job title */
+.job_title h3 {
+  margin: 0;
+  font-size: 18px;
+  font-weight: bold;
+}
+
+/* Company */
+.company_name {
+  font-size: 14px;
+  color: #666;
+}
+
+/* Tags */
+.tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 6px;
+}
+
+.tags button {
+  background: #eef2ff;
+  border: none;
+  border-radius: 16px;
+  padding: 4px 10px;
+  font-size: 12px;
+  cursor: pointer;
+}
+
+/* Job location */
+.job_location {
+  font-size: 14px;
+  color: #888;
+}
+
+/* Description */
+.job_description {
+  margin: 12px 0;
+  font-size: 14px;
+  color: #333;
+  flex-grow: 1;
+}
+
+/* Buttons */
+.job-buttons {
+  display: flex;
+  gap: 10px;
+  margin-top: 12px;
+  flex-wrap: wrap;
+}
+
+.job-buttons .btn {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  justify-content: center;
+}
+
+/* Hover effects */
+.job-buttons .btn:hover {
+  opacity: 0.9;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .card-container {
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  }
+
+  .job-buttons {
+    flex-direction: column;
+    gap: 8px;
+  }
+}

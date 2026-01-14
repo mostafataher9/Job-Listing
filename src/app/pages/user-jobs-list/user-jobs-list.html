@@ -6,48 +6,47 @@
 </head>
 <body>
    <UserNavbar />
-   <div class="">
+   <div class="manage-jobs-container">
     
      <h2> Manage Jobs</h2>
-      <table class="">xss
-        <thead class="">
+      <table class="job-table">
+        <thead>
           <tr>
             {/* to preserve numbering when delete */}
-            <th class="">Index</th>
-            <th class="">Title</th>
-            <th class="">Job-Name</th>
-            <th class="">Actions</th>
+            <th>Index</th>
+            <th>Title</th>
+            <th>Company</th>
+            <th>Actions</th>
           </tr>
         </thead>
-        <tbody *ngFor="let job of jobs">
-            <tr key={job.id} class="">
-              <td class="">{index + 1}</td>
-              <td class="">{job.id}</td>
-              <td class="">{job.name}</td>
+        <tbody>
+            <tr key={job.id} *ngFor="let job of jobs; let i = index">
+              <td>{{i + 1}}</td>
+              <td>{{job.job_title}}</td>
+              <td>{{job.company_name}}</td>
               
-              <td class="">
+              <td>
                 {/*View */}
                 <button 
-                  class=""  (click)={viewJob(job)}>
+                  class="btn btn-view"  (click)={viewJob(job)}>
                   <i className="bi bi-eye"></i>
                 </button>
                 {/*Edit */}
                 <button
-                  class="" (click)={editJob(job)}>
+                  class="btn btn-edit" (click)={editJob(job)}>
                   <i className="bi bi-pencil-square"></i>
                 </button>
                  {/*Delete */}
                 <button
-                  class=""
+                  class="btn btn-delete"
                   (click)={deleteJob(job)}>
                   <i className="bi bi-trash"></i>
                 </button>
               </td>
             </tr>
-          ))}
         </tbody>
       </table>
    </div>
-   <footer />
+   <Footer />
 </body>
 

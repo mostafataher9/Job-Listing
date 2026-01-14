@@ -8,8 +8,7 @@
    <Navbar />
    <div class="card-container">
       <div class="job-card">
-        <ul> <!--class name job_title, company_name are used bcz every onne has own styling-->
-          <li class="job_title">  <h3> {{job.job_title}} </h3> </li>
+        <ul class="job-details"> <!--class name job_title, company_name are used bcz every onne has own styling-->
           <li class="job_title">  <h3> {{job.job_title}} </h3> </li>
           <li class="company_name">  {{job.company_name}} </li>
           <li class="tags">  <span class="tag" *ngFor="let tag of job.tags.split(',')"> <button type="button"> {{ job.tag.trim() }} </button> </span>  </li> 
@@ -17,11 +16,15 @@
         </ul>
         <hr />
         <p class="job_description"> {{job.job_description}}</p>
-        <a [href]="'mail to:' + job.contact_email" class="btn btn-primary"><li class="bi bi-envelope"></li>Contact Employer</a>
-        <a [href]="job.web_url"  class="btn btn-success"> <i class="bi bi-globe"></i> Visit Website </a>
+
+        <div class="job-buttons">
+          <a [href]="'mail to:' + job.contact_email" class="btn btn-primary"><li class="bi bi-envelope"></li>Contact Employer</a>
+          <a [href]="job.web_url"  class="btn btn-success"> <i class="bi bi-globe"></i> Visit Website </a>
+        </div>
+       
       </div>
    </div>
-    <img src=""
+    <img src="" />
      <h2></h2>
    </div>
    <Footer />

@@ -1,252 +1,121 @@
-"use client";
-
-import { useEffect, useState } from "react";
-import Menu from '../components/Menu';
-
-interface Role {
-  id: number;
-  role: string;
-}
-
-interface Member {
-  id: number;
-  name: string;
-  email: string;
-  phone: string | null;
-  employment_type: string;
-  members_role_id: number;
-  roles: Role | null;
-}
-
-export default function TeamPage() {
-
-  const [roles, setRoles]= useState<Role[]>([]);
-  const [members, setMembers] = useState<Member[]>([]);
-  const [editingMember, setEditingMember] = useState<Member | null>(null);
-  const [viewingMember,setViewingMember]= useState<Member | null>(null);
-  const API_URL = process.env.NEXT_PUBLIC_API_URL;
-  // Fetch members from backend
-  const fetchMembers = async () => {
-    try{  
-      const res = await fetch(`${API_URL}/members`);
-      const data = await res.json();
-      setMembers(data);
-    }catch(err){
-      console.error(err);
-    }
-  };
-  
-  const fetchRoles= async() =>{
-    try{
-      const res= await fetch(`${API_URL}/roles`);// your API endpoint that returns all roles
-      const data= await res.json();
-      setRoles(data);
-    }catch(err){
-      console.error(err);
-    }
-   };
-
-
-  useEffect(() => { fetchMembers(); fetchRoles(); }, []);
-  //✅ The [] dependency array means this will run once, after the component mounts. Perfect for initial data loading.
-
-  // Delete member
-  const handleDelete = async (id: number) => {
-    if (!confirm("Are you sure you want to delete this member?")) return;
-
-    const res=await fetch(`${API_URL}/members/${id}`, { method: "DELETE" });
-    const data = await res.json();
-    alert(data.message)
-    setMembers(members.filter((m) => m.id !== id));
-  };
-
-  // Save edited member
-  const handleSave = async (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!editingMember) return;
-    
-    const { id, name,  phone, email, employment_type, members_role_id } = editingMember;
-
-    const res = await fetch(`${API_URL}/members/${id}`, {
-      method: "PUT",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ name, phone,  email, employment_type, members_role_id }),
-    });
-    const updatedMember = await res.json();
-    alert(updatedMember.message);
-    setMembers(prev =>
-               prev.map(m => (m.id === updatedMember.member.id ? updatedMember.member : m))
-    );
-    setEditingMember(null);
-  };
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
 </head>
 <body>
-  <div className="flex min-h-screen bg-blue-900 font-sans dark:bg-black">
-    <div className="text-left h-50 w-20">
+  <div class="manage">
+    <div class="manage-navbar">
            <AdminNavbar />
     </div>
-    <div className="flex-1 flex justify-center items-start py-32 px-16"> 
-     <div className="w-full max-w-5xl bg-white dark:bg-gray-900 shadow-md rounded-xl p-6 overflow-x-auto">
-     <h1 className="text-3xl font-bold mb-6">Team Members</h1>
-     <div className="overflow-x-auto rounded-xl shadow-md border border-gray-200">
-       <table className="min-w-full divide-y divide-gray-200 text-sm">
-        <thead className="bg-gray-100">
-          <tr>
-            {/* to preserve numbering when delete */}
-            <th className="px-4 py-3 text-center font-semibold text-gray-600">Index</th>
-            <th className="px-4 py-3 text-center font-semibold text-gray-600">ID</th>
-            <th className="px-4 py-3 text-center font-semibold text-gray-600">Name</th>
-            <th className="px-4 py-3 text-center font-semibold text-gray-600">Email</th>
-            <th className="px-4 py-3 text-center font-semibold text-gray-600">Phone Nb</th>
-            <th className="px-4 py-3 text-center font-semibold text-gray-600">Employment Type</th>
-            <th className="px-4 py-3 text-center font-semibold text-gray-600">Role</th>
-            <th className="px-4 py-3 text-center font-semibold text-gray-600">Actions</th>
-          </tr>
+    <div class="manage_1"> 
+     <div class="manage_2">
+     <h1  class="manage_heading">Team Members</h1>
+     <div class="manage_3">
+       <table class="manage_table">
+        <thead class="manage_thead">
+            <tr>
+              {/* to preserve numbering when delete */}
+              <th class="manage_th">Index</th>
+              <th class="manage_th">ID</th>
+              <th class="manage_th">Name</th>
+              <th class="manage_th">Email</th>
+              <th class="manage_th">Role</th>
+            </tr>
         </thead>
         <tbody>
-          {members.map((m,index)=> (
-            <tr key={m.id} className="hover:bg-gray-50">
-              <td className="px-4 py-3 text-center text-gray-600">{index + 1}</td>
-              <td className="px-4 py-3 text-center text-gray-600">{m.id}</td>
-              <td className="px-4 py-3 text-center font-medium text-gray-700">{m.name}</td>
-              <td className="px-4 py-3 text-center text-gray-600">{m.email}</td>
-              <td className="px-4 py-3 text-center text-gray-600">{m.phone || "-"}</td>
-              <td className="px-4 py-3 text-center text-gray-600">{m.employment_type}</td>
-              <td className="px-4 py-3 text-center text-gray-600">
-                  {m.roles?.role ?? 'No Role'}
-              </td>
-              <td className="flex border-2 border-gray-300 px-4 py-3 space-x-2">
-
+            <tr key={m.id} class="hover:bg-gray-50" *ngFor="let user of users">
+              <td class="manage_td">{index+1}</td>
+              <td class="manage_td">{user.id}</td>
+              <td class="manage_td">{user.name}</td>
+              <td class="manage_td">{user.email}</td>
+              <td class="manage_td">{user.role}</td>
+              <td>
                 {/*View */}
                 <button 
-                  className="bg-green-500 hover:bg-green-600 text-white px-3 py-1 rounded flex-row  items-center space-x-1"
-                  onClick={() => setViewingMember(m)}>
-                  <i className="bi bi-eye"></i>
+                  class="btn_view"
+                  (click)={View(user)}>
+                  <i class="bi bi-eye"></i>
                 </button>
                 {/*Edit */}
                 <button
-                  className="bg-blue-500 hover:bg-blue-600 text-white px-3 py-1 rounded flex-row items-center space-x-1"
-                  onClick={() => setEditingMember(m)}>
-                  <i className="bi bi-pencil-square"></i>
+                  class="btn_edit"
+                 (click)={Edit(user)}>
+                  <i class="bi bi-pencil-square"></i>
                 </button>
                  {/*Delete */}
                 <button
-                  className="bg-red-500 hover:bg-red-600 text-white px-3 py-1 rounded flex-row  items-center space-x-1"
-                  onClick={() => handleDelete(m.id)}>
-                  <i className="bi bi-trash"></i>
+                  class="btn_del"
+                  (click)={Delete(user.id)}>
+                  <i class="bi bi-trash"></i>
                 </button>
               </td>
             </tr>
-          ))}
         </tbody>
       </table>
      </div>
 
-      {/* Edit form */}
-      {editingMember && (
-        <div className="fixed inset-0 z-50 bg-black/40 flex items-center justify-center">
-          <div className="bg-white w-full max-w-sm rounded-xl p-6 shadow-xl">
-          <h2 className="text-xl font-bold mb-4">Edit Member</h2>
-          <form onSubmit={handleSave} className="space-y-3">
+       <!--Edit-->
+        <div class="edit-form"  *ngIf="mode === 'edit'">
+          <div class="edit-form_1">
+          <h2  class="edit-form_heading">Edit Member</h2>  
+          <form #editForm="ngForm" (ngSubmit)="onSubmit(editForm)" class="space-y-3">
 
-          <div style={{ marginBottom: "10px" }}>
-            <label className="block text-sm font-medium text-gray-700 mb-1">Name:</label>
+          <div style="margin-bottom: 10px;">
+            <label class="edit-form_label">Name:</label>
             <input
-              className="sw-full rounded-lg border border-gray-300 px-3 py-2
-                       focus:outline-none focus:ring-2 focus:ring-blue-500"
-              value={editingMember.name}
-              onChange={(e) => setEditingMember({ ...editingMember, name: e.target.value })}
-              placeholder="Name"
-            />
+              class="edit-form_input"
+                       [(ngModel)]="user.name"  placeholder="Name"  />
           </div>
 
-          <div style={{ marginBottom: "10px" }}>
-            <label className="block text-sm font-medium text-gray-700 mb-1">Email:</label>
+          <div style="margin-bottom: 10px;">
+            <label class="edit-form_label">Email:</label>
             <input
-              className="sw-full rounded-lg border border-gray-300 px-3 py-2
-                       focus:outline-none focus:ring-2 focus:ring-blue-500"
-              value={editingMember.email}
-              onChange={(e) => setEditingMember({ ...editingMember, email: e.target.value })}
-              placeholder="Email"
-            />
+              class="edit-form_input"
+              [(ngModel)]="user.email"  placeholder="Email" />
           </div>
 
-          <div style={{ marginBottom: "10px" }}>
-            <label className="block text-sm font-medium text-gray-700 mb-1">Phone Nb:</label>
+          <div style="margin-bottom: 10px;">
+            <label class="edit-form_label">Employment Type:</label>
             <input
-              className="sw-full rounded-lg border border-gray-300 px-3 py-2
-                       focus:outline-none focus:ring-2 focus:ring-blue-500"
-              value={editingMember.phone || ""}
-              onChange={(e) => setEditingMember({ ...editingMember, phone: e.target.value })}
-              placeholder="Phone Number"
-            />
-          </div>
-
-          <div style={{ marginBottom: "10px" }}>
-            <label className="block text-sm font-medium text-gray-700 mb-1">Employment Type:</label>
-            <input
-             className="sw-full rounded-lg border border-gray-300 px-3 py-2
-                       focus:outline-none focus:ring-2 focus:ring-blue-500"
-              value={editingMember.employment_type}
-              onChange={(e) => setEditingMember({ ...editingMember, employment_type: e.target.value })}
-              placeholder="Employment Type"
-            />
-          </div>
-
-          <div style={{ marginBottom: "10px" }}>
-            <label className="block text-sm font-medium text-gray-700 mb-1">Role:</label>
-            <select className="sw-full rounded-lg border border-gray-300 px-3 py-2
-                       focus:outline-none focus:ring-2 focus:ring-blue-500"
-                     value={editingMember.members_role_id} onChange={(e) => setEditingMember({ ...editingMember, members_role_id: Number(e.target.value), }) } >
-             {roles.map((r) => ( <option key={r.id} value={r.id}> {r.role} </option> ))} 
-            </select>
+             class="edit-form_input"
+             [(ngModel)]="user.role" placeholder="Role"/>
           </div>
            
-         <div className="flex space-x-2">
-              <button type="submit"  className="w-full bg-green-600 text-white py-2 rounded-lg
-                     hover:bg-green-700 transition font-medium" >
-                     <i className="bi bi-check-circle"></i>
+         <div class="edit-form_input_buttons">
+              <button type="submit"  class="edit-form_input_button1" >
+                     <i class="bi bi-check-circle"></i>
                 Save
               </button>
            
               <button
                 type="button"
-                onClick={() => setEditingMember(null)}
-                className="w-full bg-gray-600 text-white py-2 rounded-lg
-                     hover:bg-gray-700 transition font-medium">
-                 <i className="bi bi-x-circle"></i>
+                (click)={backToList()}
+                class="edit-form_input_button2">
+                 <i class="bi bi-x-circle"></i>
                 Cancel
               </button>
          </div>
         </form>
         </div>
       </div>
-      )}
-     {/* */}
-     {viewingMember && (
-        <div className="card-container fixed inset-0 z-50 bg-black/40 flex items-center justify-center">
-          <div className="card bg-white w-full max-w-sm rounded-xl p-6 shadow-xl">
-            <h2 className="text-xl font-semibold mb-4">{viewingMember.name}</h2>
-            <p className="text-sm font-medium mb-1"><strong>Email:</strong> {viewingMember.email}</p>
-            <p className="text-sm font-medium mb-1"><strong>Phone:</strong> {viewingMember.phone}</p>
-            <p className="text-sm font-medium mb-1"><strong>Employment:</strong> {viewingMember.employment_type}</p>
-            <p className="text-sm font-medium mb-1"><strong>Role:</strong> {viewingMember.roles?.role}</p>
-            <button onClick={() => setViewingMember(null)} className="w-full bg-blue-600 text-white py-2 rounded-lg
-                     hover:bg-blue-700 transition font-medium">
-              <i className="bi bi-x-lg"></i>
-              Close
+  
+     <!--View-->
+      <div class="view-form"  *ngIf="mode === 'view'">
+        <div class="view-form_1">
+          <div class="view-form_2">
+              <p>{index + 1}</td>
+              <p>{user.id}</td>
+              <h2 style="font-weight: 600;  font-size: 1.25rem;  margin-bottom: 1rem;">{user.name}</h2>
+              <p>{user.email}</p>
+              <p>{user.role}</p>
+            <button  type="button" (click)={backToList())} class="view-form_input_button">
+              <i class="bi bi-x-lg"></i>
+              Back
             </button>
           </div>
         </div>
-     )}
      </div>
     </div>
   </div> 
-  );
-}
 </body>
 </html>
