@@ -140,6 +140,20 @@
       background-color: #DC2626; /* hover:bg-red-600 */
 }
 
+
+.add-form{
+  position: fixed;                 /* fixed */
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;                          /* inset-0 */
+  z-index: 50;                      /* z-50 */
+  background-color: rgba(0,0,0,0.4);/* bg-black/40 */
+  display: flex;                    /* flex */
+  align-items: center;              /* items-center */
+  justify-content: center;   
+}
+
 .edit-form{
   position: fixed;                 /* fixed */
   top: 0;

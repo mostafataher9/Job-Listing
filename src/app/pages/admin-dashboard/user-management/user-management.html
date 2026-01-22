@@ -10,6 +10,9 @@
     <div class="manage_1"> 
      <div class="manage_2">
      <h1  class="manage_heading">Team Members</h1>
+     <button class="add-user-btn" (click)="openAddUserForm()">
+          <i class="bi bi-person-plus me-1"></i> Add User
+     </button>
      <div class="manage_3">
        <table class="manage_table">
         <thead class="manage_thead">
@@ -23,7 +26,7 @@
             </tr>
         </thead>
         <tbody>
-            <tr key={m.id} class="hover:bg-gray-50" *ngFor="let user of users">
+            <tr key={user.id} class="hover:bg-gray-50" *ngFor="let user of users">
               <td class="manage_td">{index+1}</td>
               <td class="manage_td">{user.id}</td>
               <td class="manage_td">{user.name}</td>
@@ -39,13 +42,13 @@
                 {/*Edit */}
                 <button
                   class="btn_edit"
-                 (click)={Edit(user)}>
+                  (click)={Edit(user)}>
                   <i class="bi bi-pencil-square"></i>
                 </button>
                  {/*Delete */}
                 <button
                   class="btn_del"
-                  (click)={Delete(user.id)}>
+                  (click)={DeleteUser(user.id)}>
                   <i class="bi bi-trash"></i>
                 </button>
               </td>
@@ -54,17 +57,35 @@
       </table>
      </div>
 
-       <!--Edit-->
-        <div class="edit-form"  *ngIf="mode === 'edit'">
+     <!--Add-->
+    <div class="add-form"  *ngIf="mode === 'add'">
           <div class="edit-form_1">
           <h2  class="edit-form_heading">Edit Member</h2>  
-          <form #editForm="ngForm" (ngSubmit)="onSubmit(editForm)" class="space-y-3">
+          <form #addForm="ngForm" (ngSubmit)="AddUser()" class="space-y-3">
 
           <div style="margin-bottom: 10px;">
             <label class="edit-form_label">Name:</label>
             <input
+              class="edit-form_input"  [(ngModel)]="user.name"  placeholder="Name"  />
+          </div>
+
+          <div style="margin-bottom: 10px;">
+            <label class="edit-form_label">Email:</label>
+            <input
               class="edit-form_input"
-                       [(ngModel)]="user.name"  placeholder="Name"  />
+              [(ngModel)]="user.email"  placeholder="Email" />
+          </div>
+
+    <!--Edit-->
+    <div class="edit-form"  *ngIf="mode === 'edit'">
+          <div class="edit-form_1">
+          <h2  class="edit-form_heading">Edit Member</h2>  
+          <form #editForm="ngForm" (ngSubmit)="EditUser(user.id)" class="space-y-3">
+
+          <div style="margin-bottom: 10px;">
+            <label class="edit-form_label">Name:</label>
+            <input
+              class="edit-form_input"  [(ngModel)]="user.name"  placeholder="Name"  />
           </div>
 
           <div style="margin-bottom: 10px;">
@@ -93,7 +114,7 @@
                 class="edit-form_input_button2">
                  <i class="bi bi-x-circle"></i>
                 Cancel
-              </button>
+             </button>
          </div>
         </form>
         </div>
@@ -108,7 +129,7 @@
               <h2 style="font-weight: 600;  font-size: 1.25rem;  margin-bottom: 1rem;">{user.name}</h2>
               <p>{user.email}</p>
               <p>{user.role}</p>
-            <button  type="button" (click)={backToList())} class="view-form_input_button">
+            <button type="button" (click)={backToList())} class="view-form_input_button">
               <i class="bi bi-x-lg"></i>
               Back
             </button>
